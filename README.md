@@ -1,10 +1,10 @@
 # affilarm — Affirmation Alarm
 
-A cross-platform mobile app (iOS / Android) that wakes you up with affirmation phrases instead of a generic alarm tone. Read out loud via TTS at your set time to anchor positive intent into your morning routine.
+An iOS app that wakes you up with affirmation phrases instead of a generic alarm tone. Read out loud via TTS at your set time to anchor positive intent into your morning routine.
 
-Built with **Flutter** (planned). Backed by Firebase Authentication and an optional BYOK (Bring Your Own Key) Claude API integration for phrase generation.
+Built with **Swift / SwiftUI**. Backed by Firebase Authentication and an optional BYOK (Bring Your Own Key) Claude API integration for phrase generation.
 
-> **Status: planning / pre-development.** No releases yet. The design document is at [HANDOFF_affirmation-alarm.md](HANDOFF_affirmation-alarm.md).
+> **Status: in development.** The design document is at [HANDOFF_affirmation-alarm.md](HANDOFF_affirmation-alarm.md).
 
 ---
 
@@ -43,8 +43,8 @@ Built with **Flutter** (planned). Backed by Firebase Authentication and an optio
 ### v1.3
 
 - Statistics view (calendar + phrase rankings)
-- Home-screen widget (iOS / Android)
-- Apple Watch / Wear OS companion
+- Home-screen widget (iOS)
+- Apple Watch companion
 
 ---
 
@@ -52,15 +52,15 @@ Built with **Flutter** (planned). Backed by Firebase Authentication and an optio
 
 | Layer | Choice |
 |---|---|
-| App | Flutter (Dart) |
-| Local DB | SQLite or Hive |
+| App | Swift / SwiftUI — iOS only |
+| Local DB | SwiftData |
 | Auth | Firebase Authentication |
 | AI (optional) | Claude API — BYOK only |
 | Backend | Hono on Fly.io (Firebase token verification only) |
-| TTS | `AVSpeechSynthesizer` (iOS) / `TextToSpeech` (Android) |
-| Notifications | `flutter_local_notifications` + platform alarm APIs |
+| TTS | `AVSpeechSynthesizer` |
+| Notifications | `UNUserNotificationCenter` |
 
-The Claude API is called **directly from the app** using a user-supplied key stored in Keychain / Keystore. No proxy server is used for AI requests.
+The Claude API is called **directly from the app** using a user-supplied key stored in iOS Keychain. No proxy server is used for AI requests.
 
 ---
 
@@ -71,8 +71,6 @@ Anthropic's Usage Policy (updated February 2026) prohibits third-party apps from
 ---
 
 ## Repository Status
-
-This repository currently contains only the design handoff document. Source code will be added once the Flutter project is scaffolded.
 
 - Design spec: [HANDOFF_affirmation-alarm.md](HANDOFF_affirmation-alarm.md)
 - Task tracker: [docs/tasks.md](docs/tasks.md)

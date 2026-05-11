@@ -6,12 +6,12 @@
 起床時刻に肯定的なフレーズをTTSで読み上げ、潜在意識への定着を促す。
 
 - **アプリ名**: affilarm
-- **プラットフォーム**: iOS / Android（クロスプラットフォーム）
-- **技術スタック**: Flutter（推奨）または React Native
+- **プラットフォーム**: iOS
+- **技術スタック**: Swift / SwiftUI
 - **バックエンド**: Hono / Fly.io Tokyo（既存インフラ活用）
 - **AI**: Claude API（フレーズ生成・開発者APIキー方式）
 - **ユーザー認証**: Firebase Authentication（メール／Google／Apple）
-- **ストア**: App Store / Google Play
+- **ストア**: App Store
 
 ---
 
@@ -118,7 +118,6 @@ TabBar
 | Kai | 男性 | 爽やか・若々しい |
 
 - iOS: `AVSpeechSynthesizer` + `ja-JP` ロケール音声から選択
-- Android: `TextToSpeech` + ロケール `ja_JP`
 - ボイス名はアプリ内の表示名。実際のシステム音声へのマッピングはOS依存
 
 #### 3-2. 読み上げパラメータ
@@ -172,7 +171,6 @@ TabBar
 
 - 読み上げ中、発話位置に合わせてテキストをハイライト
 - iOS: `AVSpeechSynthesizerDelegate.speechSynthesizer(_:willSpeakRangeOfSpeechString:utterance:)` を使用
-- Android: `UtteranceProgressListener` + `onRangeStart` (API 26+)
 
 ---
 
@@ -266,7 +264,7 @@ Honoバックエンドは Firebase認証のみに使用し、Claude APIのプロ
 | 項目 | 仕様 |
 |------|------|
 | 入力UI | 設定画面にAPIキー入力欄を設置。入力後マスク表示 |
-| 保存先 | iOS: Keychain / Android: EncryptedSharedPreferences（Keystore） |
+| 保存先 | iOS Keychain |
 | バリデーション | 入力時に `/v1/models` エンドポイントで疎通確認。失敗時はエラーメッセージ表示 |
 | エラー処理 | 無効キー・残高切れ・レート超過をそれぞれ日本語でユーザーに通知 |
 | 削除 | 設定画面からキーを削除するとKeychain/Keystoreからも即時消去 |
@@ -275,7 +273,7 @@ Honoバックエンドは Firebase認証のみに使用し、Claude APIのプロ
 
 #### セキュリティ要件
 
-- ユーザーAPIキーはKeychain/Keystoreにのみ保存。ログ・クラッシュレポートに含めない
+- ユーザーAPIキーはiOS Keychainにのみ保存。ログ・クラッシュレポートに含めない
 - 通信はHTTPS（Anthropic API エンドポイント）のみ。中間サーバーを経由しない
 - Honoバックエンドへのリクエストは Firebase IDトークンで認証（フレーズ生成以外の用途）
 
@@ -283,7 +281,7 @@ Honoバックエンドは Firebase認証のみに使用し、Claude APIのプロ
 
 ## データ設計
 
-### ローカルDB（SQLite / Hive）
+### ローカルDB（SwiftData）
 
 ```
 User
@@ -371,7 +369,7 @@ PlayRecord
 
 - [ ] 統計画面（カレンダービュー・フレーズ統計）
 - [ ] ウィジェット対応（iOS・Android）
-- [ ] Apple Watch / Wear OS 対応（バイブ＋フレーズ表示）
+- [ ] Apple Watch 対応（バイブ＋フレーズ表示）
 
 ---
 
@@ -438,9 +436,9 @@ PlayRecord
 
 ## 開発環境・注意事項
 
-- Flutter の場合、`flutter_local_notifications` でアラーム実装（iOS は `UNUserNotificationCenter`、Android は `AlarmManager` に対応）
-- アラームの確実な発火には iOS のバックグラウンド実行制限に注意。`flutter_local_notifications` + `workmanager` の組み合わせを検討
-- **Claude APIはアプリから直接呼び出す**（BYOKのためサーバープロキシ不要）。ユーザーキーはKeychain/Keystoreのみに保存し、ログ・クラッシュレポートに絶対に含めない
+- `UNUserNotificationCenter` でアラーム実装
+- アラームの確実な発火には iOS のバックグラウンド実行制限に注意
+- **Claude APIはアプリから直接呼び出す**（BYOKのためサーバープロキシ不要）。ユーザーキーはiOS Keychainのみに保存し、ログ・クラッシュレポートに絶対に含めない
 - Firebase Authは統計・ストリーク等のクラウド同期用途のみ。フレーズ生成には不要なため、v1.0はローカル動作のみでも成立する
 - Apple認証はApp Store提出要件のため必須実装
 - 匿名認証ユーザーが後からログインした場合、ローカルデータをFirebase UIDに紐付けるマイグレーション処理が必要
@@ -451,9 +449,9 @@ PlayRecord
 
 ## 参考リンク
 
-- Flutter Local Notifications: https://pub.dev/packages/flutter_local_notifications
-- AVSpeechSynthesizer (iOS): https://developer.apple.com/documentation/avfaudio/avspeechsynthesizer
-- TextToSpeech (Android): https://developer.android.com/reference/android/speech/tts/TextToSpeech
+- AVSpeechSynthesizer: https://developer.apple.com/documentation/avfaudio/avspeechsynthesizer
+- UNUserNotificationCenter: https://developer.apple.com/documentation/usernotifications/unusernotificationcenter
+- SwiftData: https://developer.apple.com/documentation/swiftdata
 - Claude API: https://docs.anthropic.com/en/api/getting-started
 - Anthropic Usage Policy（OAuth禁止の根拠）: https://docs.anthropic.com/en/policies/usage-policy
 - Firebase Authentication: https://firebase.google.com/docs/auth

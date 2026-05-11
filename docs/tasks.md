@@ -15,9 +15,9 @@
 | 0-4 | .gitignore / LICENSE（MIT）配置 | [x] | Flutter + 各OS用 |
 | 0-5 | タスク管理ファイル作成 | [x] | `docs/tasks.md` |
 | 0-6 | CLAUDE.md 配置 | [x] | プロジェクト用 Claude Code ガイド |
-| 0-7 | Flutter プロジェクトスキャフォールド | [ ] | `flutter create`（bundle ID / package name 決定後） |
-| 0-8 | Firebase プロジェクト作成（iOS / Android） | [ ] | google-services.json / GoogleService-Info.plist 取得 |
-| 0-9 | CI/CD 設計（GitHub Actions） | [ ] | iOS / Android ビルド方針決定 |
+| 0-7 | Xcode プロジェクトスキャフォールド | [x] | Swift / SwiftUI / SwiftData / XcodeGen / iOS 18+ |
+| 0-8 | Firebase プロジェクト作成（iOS） | [ ] | GoogleService-Info.plist 取得 |
+| 0-9 | CI/CD 設計（GitHub Actions） | [ ] | iOS ビルド方針決定 |
 
 ---
 
@@ -27,14 +27,14 @@
 
 | # | タスク | 状態 | 備考 |
 |---|--------|------|------|
-| 1-1 | アラーム CRUD（時刻 / 曜日繰り返し / ON-OFF） | [ ] | `Alarm` モデル + `flutter_local_notifications` |
+| 1-1 | アラーム CRUD（時刻 / 曜日繰り返し / ON-OFF） | [ ] | `Alarm` モデル + `UNUserNotificationCenter` |
 | 1-2 | 複数アラーム管理 UI（一覧 / 編集） | [ ] | TabBar のホーム画面 |
 | 1-3 | フレーズ手動入力 + プリセットライブラリ | [ ] | `Phrase` モデル + カテゴリ別プリセット |
 | 1-4 | フレーズセット管理（アラーム紐付け） | [ ] | `PhraseSet` モデル |
-| 1-5 | TTS 実装（ボイス選択 / 速度 / ピッチ / 音量） | [ ] | iOS: AVSpeechSynthesizer / Android: TextToSpeech |
+| 1-5 | TTS 実装（ボイス選択 / 速度 / ピッチ / 音量） | [ ] | `AVSpeechSynthesizer` |
 | 1-6 | 繰り返しモード（1 / 3 / 5 / 10 / ループ） | [ ] | カウンター表示（●●●○○） |
 | 1-7 | アラーム発動画面（時刻 / フレーズ / 停止ボタン） | [ ] | ロック画面でも操作可能に |
-| 1-8 | ローカル DB（SQLite / Hive）データレイヤー | [ ] | データ設計は HANDOFF 参照 |
+| 1-8 | ローカル DB（SwiftData）データレイヤー | [ ] | データ設計は HANDOFF 参照 |
 
 ### 認証
 
@@ -56,7 +56,7 @@
 | # | タスク | 状態 | 備考 |
 |---|--------|------|------|
 | 2-1 | 設定画面に APIキー入力 UI（マスク表示） | [ ] | |
-| 2-2 | APIキーを Keychain / EncryptedSharedPreferences に保存 | [ ] | ログ・クラッシュレポート除外 |
+| 2-2 | APIキーを Keychain に保存 | [ ] | ログ・クラッシュレポート除外 |
 | 2-3 | `/v1/models` での疎通確認・バリデーション | [ ] | 無効キー時のエラーメッセージ |
 | 2-4 | エラー処理（無効キー / 残高切れ / レート超過） | [ ] | 日本語通知 |
 | 2-5 | APIキー削除フロー（Keychain/Keystore から即時削除） | [ ] | |
@@ -85,7 +85,7 @@
 
 | # | タスク | 状態 | 備考 |
 |---|--------|------|------|
-| 3-1 | テキストハイライト同期 | [ ] | iOS: `willSpeakRangeOfSpeechString` / Android: `onRangeStart` |
+| 3-1 | テキストハイライト同期 | [ ] | `AVSpeechSynthesizerDelegate.willSpeakRangeOfSpeechString` |
 | 3-2 | 連続記録（ストリーク）ロジック | [ ] | `PlayRecord` を集計 |
 | 3-3 | ストリーク表示（ホーム画面） | [ ] | |
 | 3-4 | 連続記録が途切れた際の通知 | [ ] | |
@@ -100,9 +100,7 @@
 | 4-1 | 統計画面（総再生回数 / フレーズランキング） | [ ] | |
 | 4-2 | カレンダービュー（達成日色付け） | [ ] | |
 | 4-3 | iOS ホーム画面ウィジェット | [ ] | WidgetKit |
-| 4-4 | Android ホーム画面ウィジェット | [ ] | AppWidget |
-| 4-5 | Apple Watch 対応（バイブ + フレーズ表示） | [ ] | |
-| 4-6 | Wear OS 対応 | [ ] | |
+| 4-4 | Apple Watch 対応（バイブ + フレーズ表示） | [ ] | |
 
 ---
 
@@ -121,8 +119,8 @@ HANDOFF の「将来計画（高難易度・見送り）」セクションを参
 
 | Phase | 完了 / 全体 | 状態 |
 |-------|-------------|------|
-| Phase 0: プロジェクト初期設定 | 6 / 9 | 進行中 |
+| Phase 0: プロジェクト初期設定 | 7 / 9 | 進行中 |
 | Phase 1: v1.0 MVP | 0 / 14 | 未着手 |
 | Phase 2: v1.1 — AI連携 + 効果補助 | 0 / 13 | 未着手 |
 | Phase 3: v1.2 — 記録・ハイライト | 0 / 5 | 未着手 |
-| Phase 4: v1.3 — 統計・拡張 | 0 / 6 | 未着手 |
+| Phase 4: v1.3 — 統計・拡張 | 0 / 4 | 未着手 |
