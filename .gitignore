@@ -1,0 +1,83 @@
+# ─── Flutter / Dart ─────────────────────────────────────────────
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Symbolicate / debug
+**/doc/api/
+.fvm/
+
+# Generated localization
+**/generated_plugin_registrant.*
+
+# ─── Android ────────────────────────────────────────────────────
+android/.gradle/
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/**/GeneratedPluginRegistrant.java
+android/key.properties
+android/app/*.jks
+android/app/*.keystore
+*.jks
+*.keystore
+
+# ─── iOS / macOS ────────────────────────────────────────────────
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/Flutter/flutter_export_environment.sh
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner/GoogleService-Info.plist
+
+# ─── Firebase ───────────────────────────────────────────────────
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+.firebaserc
+
+# ─── Secrets / env ──────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.cer
+*.mobileprovision
+
+# ─── IDE / editor ───────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.metadata
+.classpath
+.project
+.settings/
+
+# ─── macOS ──────────────────────────────────────────────────────
+.DS_Store
+._*
+
+# ─── Windows ────────────────────────────────────────────────────
+Thumbs.db
+Desktop.ini
+
+# ─── Logs ───────────────────────────────────────────────────────
+*.log
+npm-debug.log*
