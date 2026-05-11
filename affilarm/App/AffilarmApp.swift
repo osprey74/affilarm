@@ -24,11 +24,36 @@ class AppDelegate: NSObject, UIApplicationDelegate, @unchecked Sendable {
     }
 }
 
-/// Separate delegate class to avoid Sendable issues with UNUserNotificationCenterDelegate
 final class NotificationDelegate: NSObject, UNUserNotificationCenterDelegate, Sendable {
     static let shared = NotificationDelegate()
 
+    /// Show banner when app is in foreground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        [.banner, .sound, .badge]
+        // Also trigger the firing view
+        let alarmID = extractAlarmID(from: notification.request.identifier)
+        if let alarmID {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .alarmFired, object: nil, userInfo: ["alarmID": alarmID])
+            }
+        }
+        return [.banner, .sound, .badge]
+    }
+
+    /// Handle notification tap (app was in background)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let alarmID = extractAlarmID(from: response.notification.request.identifier)
+        if let alarmID {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: .alarmFired, object: nil, userInfo: ["alarmID": alarmID])
+            }
+        }
+    }
+
+    /// Extract alarm UUID from notification identifier (format: "UUID" or "UUID-dayIndex")
+    private func extractAlarmID(from identifier: String) -> UUID? {
+        let uuidString = identifier.contains("-") && identifier.count > 36
+            ? String(identifier.prefix(36))
+            : identifier
+        return UUID(uuidString: uuidString)
     }
 }

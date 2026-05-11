@@ -3,14 +3,27 @@ import SwiftUI
 
 struct SettingsView: View {
     @State private var tts = TTSService()
+    @State private var voices: [AVSpeechSynthesisVoice] = []
 
     @AppStorage("ttsRate") private var rate = 0.5 as Double
     @AppStorage("ttsPitch") private var pitch = 1.0 as Double
     @AppStorage("ttsVolume") private var volume = 0.8 as Double
+    @AppStorage("ttsVoiceId") private var voiceId = ""
 
     var body: some View {
         NavigationStack {
             List {
+                // Voice selection
+                Section("ボイス") {
+                    Picker("ボイス", selection: $voiceId) {
+                        Text("デフォルト").tag("")
+                        ForEach(voices, id: \.identifier) { voice in
+                            Text(voiceDisplayName(voice))
+                                .tag(voice.identifier)
+                        }
+                    }
+                }
+
                 // Voice settings
                 Section("ボイス設定") {
                     VStack(alignment: .leading) {
@@ -54,7 +67,8 @@ struct SettingsView: View {
                             "今日も素晴らしい一日が始まる。私は自分の力を信じている。",
                             rate: Float(rate),
                             pitch: Float(pitch),
-                            volume: Float(volume)
+                            volume: Float(volume),
+                            voiceIdentifier: voiceId.isEmpty ? nil : voiceId
                         )
                     } label: {
                         Label(
@@ -70,7 +84,19 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("設定")
+            .onAppear {
+                voices = tts.availableJapaneseVoices()
+            }
         }
+    }
+
+    private func voiceDisplayName(_ voice: AVSpeechSynthesisVoice) -> String {
+        let quality = switch voice.quality {
+        case .enhanced: " (高品質)"
+        case .premium: " (プレミアム)"
+        default: ""
+        }
+        return "\(voice.name)\(quality)"
     }
 }
 

@@ -12,9 +12,12 @@
 		22D11223C388942AE3F82E52 /* PlayRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B317BCC894A70DADA34B204 /* PlayRecord.swift */; };
 		24B70F12F69B584034ABA219 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401F860B573658CEACA06FB /* HomeView.swift */; };
 		24C9D5FD19B656E84AE90F24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A9F536556DF2DB8CB869156 /* Assets.xcassets */; };
+		2D5B9D9F67F6614B69B610F3 /* AlarmFiringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA5612A47138EF5FDB1213C /* AlarmFiringView.swift */; };
+		441BB5D43B1A6F519A9B63D4 /* PresetPhrases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BD3A68483B541B20DB78B7 /* PresetPhrases.swift */; };
 		4F64390E5A5E4164901FBC6F /* PhraseListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7010C3AEFCF1633D1AC03E2 /* PhraseListView.swift */; };
 		52435D96B7A6FD25DE413CBF /* AlarmListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35F92AEDFA30EF5C6D6CC70 /* AlarmListView.swift */; };
 		575E68E8608D9794B6FD1267 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67285B3DD2D52E25CB7185AE /* NotificationService.swift */; };
+		6AB85687C52021B695FC7C45 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9D60102DC5BD6BAE8C89A3EC /* GoogleService-Info.plist */; };
 		985F48389DD797BCC9C5C294 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B45D490FE6B4FA1C4C43F4C /* AppTheme.swift */; };
 		A5E10463D9076B8ECDD839B7 /* AlarmEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFAC6125C06A7EB1DDA793F /* AlarmEditView.swift */; };
 		ADA9020B42B8F91D23F14281 /* Phrase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67B7C63CA149C89E532139E9 /* Phrase.swift */; };
@@ -40,6 +43,7 @@
 		0185409AA4E13583875D159A /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		08F8C269FDD8D2B26FB9A6C7 /* AffilarmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffilarmApp.swift; sourceTree = "<group>"; };
 		18BCF1AA84E712305DB410CE /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		18BD3A68483B541B20DB78B7 /* PresetPhrases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetPhrases.swift; sourceTree = "<group>"; };
 		1A9F536556DF2DB8CB869156 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B45D490FE6B4FA1C4C43F4C /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		2B317BCC894A70DADA34B204 /* PlayRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayRecord.swift; sourceTree = "<group>"; };
@@ -53,9 +57,11 @@
 		67B7C63CA149C89E532139E9 /* Phrase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phrase.swift; sourceTree = "<group>"; };
 		7401F860B573658CEACA06FB /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		879AA4E2951F497E7B654095 /* TTSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTSService.swift; sourceTree = "<group>"; };
+		9D60102DC5BD6BAE8C89A3EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9DFA25970D0FB0F2D5623D7C /* PhraseSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseSet.swift; sourceTree = "<group>"; };
 		B7010C3AEFCF1633D1AC03E2 /* PhraseListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseListView.swift; sourceTree = "<group>"; };
 		BAFAC6125C06A7EB1DDA793F /* AlarmEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEditView.swift; sourceTree = "<group>"; };
+		BEA5612A47138EF5FDB1213C /* AlarmFiringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmFiringView.swift; sourceTree = "<group>"; };
 		F35F92AEDFA30EF5C6D6CC70 /* AlarmListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				1A9F536556DF2DB8CB869156 /* Assets.xcassets */,
+				9D60102DC5BD6BAE8C89A3EC /* GoogleService-Info.plist */,
 				56583B16DAC5C6D36B6F18C4 /* Info.plist */,
 			);
 			path = Resources;
@@ -99,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				BAFAC6125C06A7EB1DDA793F /* AlarmEditView.swift */,
+				BEA5612A47138EF5FDB1213C /* AlarmFiringView.swift */,
 				F35F92AEDFA30EF5C6D6CC70 /* AlarmListView.swift */,
 			);
 			path = Alarm;
@@ -210,6 +218,7 @@
 		E7350D3D5141436B97E2CB19 /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				18BD3A68483B541B20DB78B7 /* PresetPhrases.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -296,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24C9D5FD19B656E84AE90F24 /* Assets.xcassets in Resources */,
+				6AB85687C52021B695FC7C45 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +319,7 @@
 				D3EA6CF04856C2A15F29FFA1 /* AffilarmApp.swift in Sources */,
 				B113A1591EFFB5703B63704C /* Alarm.swift in Sources */,
 				A5E10463D9076B8ECDD839B7 /* AlarmEditView.swift in Sources */,
+				2D5B9D9F67F6614B69B610F3 /* AlarmFiringView.swift in Sources */,
 				52435D96B7A6FD25DE413CBF /* AlarmListView.swift in Sources */,
 				985F48389DD797BCC9C5C294 /* AppTheme.swift in Sources */,
 				FA1ABC1C76CFF901365E8D01 /* Categories.swift in Sources */,
@@ -318,6 +329,7 @@
 				4F64390E5A5E4164901FBC6F /* PhraseListView.swift in Sources */,
 				092D45357023BEB465B47332 /* PhraseSet.swift in Sources */,
 				22D11223C388942AE3F82E52 /* PlayRecord.swift in Sources */,
+				441BB5D43B1A6F519A9B63D4 /* PresetPhrases.swift in Sources */,
 				1DD12491AD4DC63BB3AF1AD9 /* SettingsView.swift in Sources */,
 				CEFB47800DBE1C047477B416 /* TTSService.swift in Sources */,
 				E10F25D655244A0968B740BE /* VoiceProfile.swift in Sources */,

@@ -1,6 +1,6 @@
 # affilarm — タスク管理表
 
-> 最終更新: 2026-05-11（リポジトリ初期化）
+> 最終更新: 2026-05-11（Phase 0 完了 / Phase 1 コア機能完了）
 > 凡例: `[x]` 完了 / `[ ]` 未着手
 
 ---
@@ -12,12 +12,12 @@
 | 0-1 | GitHub リポジトリ作成 | [x] | [osprey74/affilarm](https://github.com/osprey74/affilarm) |
 | 0-2 | 設計書（HANDOFF）作成 | [x] | `HANDOFF_affirmation-alarm.md` |
 | 0-3 | README（EN / JA）整備 | [x] | `README.md` / `README.ja.md` |
-| 0-4 | .gitignore / LICENSE（MIT）配置 | [x] | Flutter + 各OS用 |
+| 0-4 | .gitignore / LICENSE（MIT）配置 | [x] | Swift / Xcode 用 |
 | 0-5 | タスク管理ファイル作成 | [x] | `docs/tasks.md` |
 | 0-6 | CLAUDE.md 配置 | [x] | プロジェクト用 Claude Code ガイド |
 | 0-7 | Xcode プロジェクトスキャフォールド | [x] | Swift / SwiftUI / SwiftData / XcodeGen / iOS 18+ |
-| 0-8 | Firebase プロジェクト作成（iOS） | [ ] | GoogleService-Info.plist 取得 |
-| 0-9 | CI/CD 設計（GitHub Actions） | [ ] | iOS ビルド方針決定 |
+| 0-8 | Firebase プロジェクト作成（iOS） | [x] | project: affilarm / GoogleService-Info.plist 取得済み |
+| 0-9 | CI/CD 設計（GitHub Actions） | [x] | `.github/workflows/ci.yml` — ビルド + テスト |
 
 ---
 
@@ -27,20 +27,20 @@
 
 | # | タスク | 状態 | 備考 |
 |---|--------|------|------|
-| 1-1 | アラーム CRUD（時刻 / 曜日繰り返し / ON-OFF） | [ ] | `Alarm` モデル + `UNUserNotificationCenter` |
-| 1-2 | 複数アラーム管理 UI（一覧 / 編集） | [ ] | TabBar のホーム画面 |
-| 1-3 | フレーズ手動入力 + プリセットライブラリ | [ ] | `Phrase` モデル + カテゴリ別プリセット |
-| 1-4 | フレーズセット管理（アラーム紐付け） | [ ] | `PhraseSet` モデル |
-| 1-5 | TTS 実装（ボイス選択 / 速度 / ピッチ / 音量） | [ ] | `AVSpeechSynthesizer` |
-| 1-6 | 繰り返しモード（1 / 3 / 5 / 10 / ループ） | [ ] | カウンター表示（●●●○○） |
-| 1-7 | アラーム発動画面（時刻 / フレーズ / 停止ボタン） | [ ] | ロック画面でも操作可能に |
-| 1-8 | ローカル DB（SwiftData）データレイヤー | [ ] | データ設計は HANDOFF 参照 |
+| 1-1 | アラーム CRUD（時刻 / 曜日繰り返し / ON-OFF） | [x] | `Alarm` モデル + `UNUserNotificationCenter` 通知連動済み |
+| 1-2 | 複数アラーム管理 UI（一覧 / 編集） | [x] | AlarmListView + AlarmEditView |
+| 1-3 | フレーズ手動入力 + プリセットライブラリ | [x] | 手動入力 + カテゴリ別プリセット25種 |
+| 1-4 | フレーズセット管理（アラーム紐付け） | [x] | アラーム編集画面でフレーズ選択 → PhraseSet 自動作成 |
+| 1-5 | TTS 実装（ボイス選択 / 速度 / ピッチ / 音量） | [x] | 設定画面にボイスピッカー + スライダー |
+| 1-6 | 繰り返しモード（1 / 3 / 5 / 10 / ループ） | [x] | AlarmFiringView でカウンター付き繰り返し再生 |
+| 1-7 | アラーム発動画面（時刻 / フレーズ / 停止ボタン） | [x] | 通知タップ/フォアグラウンド → 全画面表示 + TTS |
+| 1-8 | ローカル DB（SwiftData）データレイヤー | [x] | 全モデル定義済み |
 
 ### 認証
 
 | # | タスク | 状態 | 備考 |
 |---|--------|------|------|
-| 1-9 | Firebase Authentication 初期化 | [ ] | iOS / Android 両対応 |
+| 1-9 | Firebase Authentication 初期化 | [ ] | iOS 対応 |
 | 1-10 | メール / パスワード認証 | [ ] | |
 | 1-11 | Google ログイン | [ ] | |
 | 1-12 | Apple ログイン | [ ] | App Store 要件 |
@@ -119,8 +119,8 @@ HANDOFF の「将来計画（高難易度・見送り）」セクションを参
 
 | Phase | 完了 / 全体 | 状態 |
 |-------|-------------|------|
-| Phase 0: プロジェクト初期設定 | 7 / 9 | 進行中 |
-| Phase 1: v1.0 MVP | 0 / 14 | 未着手 |
+| Phase 0: プロジェクト初期設定 | 9 / 9 | ✅ 完了 |
+| Phase 1: v1.0 MVP | 9 / 14 | 進行中 |
 | Phase 2: v1.1 — AI連携 + 効果補助 | 0 / 13 | 未着手 |
 | Phase 3: v1.2 — 記録・ハイライト | 0 / 5 | 未着手 |
 | Phase 4: v1.3 — 統計・拡張 | 0 / 4 | 未着手 |

@@ -4,6 +4,7 @@ import SwiftUI
 struct AlarmEditView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    @Query(sort: \Phrase.createdAt, order: .reverse) private var allPhrases: [Phrase]
 
     let alarm: Alarm?
 
@@ -11,6 +12,7 @@ struct AlarmEditView: View {
     @State private var minute: Int
     @State private var weekdays: [Bool]
     @State private var repeatCount: Int
+    @State private var selectedPhraseIDs: Set<UUID>
 
     private var isNew: Bool { alarm == nil }
 
@@ -20,11 +22,12 @@ struct AlarmEditView: View {
         _minute = State(initialValue: alarm?.minute ?? 0)
         _weekdays = State(initialValue: alarm?.weekdays ?? Array(repeating: false, count: 7))
         _repeatCount = State(initialValue: alarm?.repeatCount ?? PhraseRepeatMode.three.rawValue)
+        let ids = alarm?.phraseSet?.phrases.map(\.id) ?? []
+        _selectedPhraseIDs = State(initialValue: Set(ids))
     }
 
     var body: some View {
         Form {
-            // Time picker
             Section {
                 DatePicker(
                     "時刻",
@@ -36,12 +39,10 @@ struct AlarmEditView: View {
                 .frame(maxWidth: .infinity)
             }
 
-            // Weekday selector
             Section("繰り返し") {
                 WeekdayPicker(weekdays: $weekdays)
             }
 
-            // Repeat count
             Section("読み上げ回数") {
                 Picker("回数", selection: $repeatCount) {
                     ForEach(PhraseRepeatMode.allCases) { mode in
@@ -49,6 +50,28 @@ struct AlarmEditView: View {
                     }
                 }
                 .pickerStyle(.segmented)
+            }
+
+            // Phrase selection
+            Section("フレーズ") {
+                if allPhrases.isEmpty {
+                    Text("フレーズタブから先にフレーズを追加してください")
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(allPhrases) { phrase in
+                        Button {
+                            togglePhrase(phrase.id)
+                        } label: {
+                            HStack {
+                                Image(systemName: selectedPhraseIDs.contains(phrase.id) ? "checkmark.circle.fill" : "circle")
+                                    .foregroundStyle(selectedPhraseIDs.contains(phrase.id) ? phrase.category.color : .gray)
+                                Text(phrase.text)
+                                    .foregroundStyle(.primary)
+                                    .lineLimit(1)
+                            }
+                        }
+                    }
+                }
             }
         }
         .navigationTitle(isNew ? "アラーム追加" : "アラーム編集")
@@ -78,12 +101,23 @@ struct AlarmEditView: View {
         )
     }
 
+    private func togglePhrase(_ id: UUID) {
+        if selectedPhraseIDs.contains(id) {
+            selectedPhraseIDs.remove(id)
+        } else {
+            selectedPhraseIDs.insert(id)
+        }
+    }
+
     private func save() {
+        let selectedPhrases = allPhrases.filter { selectedPhraseIDs.contains($0.id) }
+
         if let alarm {
             alarm.hour = hour
             alarm.minute = minute
             alarm.weekdays = weekdays
             alarm.repeatCount = repeatCount
+            updatePhraseSet(for: alarm, phrases: selectedPhrases)
             NotificationService.scheduleAlarm(alarm)
         } else {
             let newAlarm = Alarm(
@@ -93,10 +127,24 @@ struct AlarmEditView: View {
                 repeatCount: repeatCount
             )
             modelContext.insert(newAlarm)
+            updatePhraseSet(for: newAlarm, phrases: selectedPhrases)
             NotificationService.scheduleAlarm(newAlarm)
         }
-        NotificationService.debugPrintPending()
         dismiss()
+    }
+
+    private func updatePhraseSet(for alarm: Alarm, phrases: [Phrase]) {
+        if phrases.isEmpty {
+            alarm.phraseSet = nil
+            return
+        }
+        if let existing = alarm.phraseSet {
+            existing.phrases = phrases
+        } else {
+            let set = PhraseSet(name: "アラーム用", phrases: phrases)
+            modelContext.insert(set)
+            alarm.phraseSet = set
+        }
     }
 }
 
@@ -130,5 +178,5 @@ private struct WeekdayPicker: View {
     NavigationStack {
         AlarmEditView(alarm: nil)
     }
-    .modelContainer(for: Alarm.self, inMemory: true)
+    .modelContainer(for: [Alarm.self, Phrase.self, PhraseSet.self], inMemory: true)
 }
